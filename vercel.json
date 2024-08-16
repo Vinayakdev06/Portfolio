@@ -1,10 +1,29 @@
 {
-    "builds": [{
-        "src":"portfolio/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
-    "routes":[
+    "builds": [
+        {
+            "src": "portfolio/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1",
+            "headers": {
+                "Cache-Control": "max-age=31536000"
+            }
+        },
+        {
+            "src": "/media/(.*)",
+            "dest": "/media/$1",
+            "headers": {
+                "Cache-Control": "max-age=31536000"
+            }
+        },
         {
             "src": "/(.*)",
             "dest": "portfolio/wsgi.py"
